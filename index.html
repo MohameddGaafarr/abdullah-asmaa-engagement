@@ -272,6 +272,8 @@
   }
   /* keep each ✦ attached to the item after it so it wraps down with it on narrow screens */
   .hero-date .hero-date-item{ display:inline-flex; align-items:center; gap:18px; }
+  /* hide the ✦ separators on mobile: date, time and venue show as plain lines */
+  @media (max-width:640px){ .hero-date .hero-date-item > span:first-child{ display:none; } }
   .scroll-hint{ margin-top:30px; color:#e9d9ae; font-size:13.5px; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .scroll-hint svg{ animation:bob 2.2s ease-in-out infinite; }
   @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
