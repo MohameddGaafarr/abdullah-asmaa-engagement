@@ -293,6 +293,8 @@
   /* mobile-only line break inside a subtitle (desktop keeps one line) */
   .sec-sub .m-br{ display:none; }
   @media (max-width:640px){ .sec-sub .m-br{ display:inline; } }
+  /* mobile only: hide the dash in the location subtitle */
+  @media (max-width:640px){ .sec-sub .loc-dash{ display:none; } }
 
   .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s ease; }
   .reveal.in{ opacity:1; transform:none; }
@@ -350,6 +352,11 @@
   }
   .gold-flank{ flex:1 1 56px; max-width:96px; min-width:40px; display:flex; align-items:center; }
   .gold-flank svg{ display:block; width:100%; height:26px; filter:drop-shadow(0 0 5px rgba(201,164,92,.45)); }
+  /* mobile only: hide the side ornaments; the line becomes one distinctive gold line */
+  @media (max-width:640px){
+    .photo-highlight .gold-flank{ display:none; }
+    .photo-line{ white-space:nowrap; font-size:clamp(12px,3.8vw,16px); color:var(--gold); }
+  }
   @media (max-width:480px){
     .photo-highlight{ gap:10px; }
     .gold-flank{ min-width:34px; }
@@ -363,6 +370,8 @@
   }
   .map-box iframe{ display:block; width:100%; height:320px; border:0; }
   .addr{ text-align:center; margin:20px 0 4px; font-size:18px; }
+  /* mobile only: hide the venue name and dash under the map */
+  @media (max-width:640px){ .addr .addr-venue{ display:none; } }
   .addr b{ color:var(--brown-deep); }
   .actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:22px; }
   a.btn{
@@ -556,11 +565,11 @@
       <svg width="26" height="18" viewBox="0 0 26 18" fill="none"><circle cx="10" cy="10" r="6.5" stroke="#b08d4f" stroke-width="1.8"/><circle cx="17" cy="10" r="6.5" stroke="#c9a45c" stroke-width="1.8"/></svg>
     </div>
     <h2 class="sec-title" id="loc-title">العنوان والموقع</h2>
-    <p class="sec-sub">الاحتفال في منزل العروسة — يسعدنا وصولكم بسلام</p>
+    <p class="sec-sub">الاحتفال في منزل العروسة<span class="loc-dash"> — </span><br class="m-br">يسعدنا وصولكم بسلام</p>
     <div class="map-box reveal">
       <iframe title="خريطة موقع الخطوبة في دمياط الجديدة" src="https://maps.google.com/maps?q=31.425640106201172,31.664621353149414&z=17&hl=ar&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
-    <p class="addr"><b>منزل العروسة</b> — شارع الصحبجية، دمياط الجديدة</p>
+    <p class="addr"><span class="addr-venue"><b>منزل العروسة</b> — </span>شارع الصحبجية، دمياط الجديدة</p>
     <div class="actions">
       <a class="btn btn-gold" href="https://www.google.com/maps?q=31.425640106201172,31.664621353149414&z=17&hl=ar" target="_blank" rel="noopener">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-6.5-5.4-6.5-10.3A6.5 6.5 0 0 1 12 4a6.5 6.5 0 0 1 6.5 6.7C18.5 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.6" r="2.4" stroke="currentColor" stroke-width="2"/></svg>
