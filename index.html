@@ -290,6 +290,9 @@
     font-size:clamp(27px,6.5vw,34px); margin:0 0 8px; color:var(--brown-deep);
   }
   .sec-sub{ text-align:center; color:var(--ink-soft); margin:0 auto 30px; max-width:520px; font-weight:300; }
+  /* mobile-only line break inside a subtitle (desktop keeps one line) */
+  .sec-sub .m-br{ display:none; }
+  @media (max-width:640px){ .sec-sub .m-br{ display:inline; } }
 
   .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s ease; }
   .reveal.in{ opacity:1; transform:none; }
@@ -479,7 +482,7 @@
       <svg width="26" height="18" viewBox="0 0 26 18" fill="none"><circle cx="10" cy="10" r="6.5" stroke="#b08d4f" stroke-width="1.8"/><circle cx="17" cy="10" r="6.5" stroke="#c9a45c" stroke-width="1.8"/></svg>
     </div>
     <h2 class="sec-title" id="cd-title">العدّ التنازلي لليوم السعيد</h2>
-    <p class="sec-sub">أيام قليلة تفصلنا عن أجمل بداية… ونعدّها معكم لحظة بلحظة</p>
+    <p class="sec-sub">أيام قليلة تفصلنا عن أجمل بداية…<br class="m-br">ونعدّها معكم لحظة بلحظة</p>
     <div class="countdown reveal" id="countdown" role="timer" aria-label="العد التنازلي حتى يوم الخطوبة">
       <div class="cd-cell"><div class="cd-num" id="cd-d">—</div><div class="cd-lab">يوم</div></div>
       <div class="cd-cell"><div class="cd-num" id="cd-h">—</div><div class="cd-lab">ساعة</div></div>
