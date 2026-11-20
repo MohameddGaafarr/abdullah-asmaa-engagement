@@ -272,8 +272,15 @@
   }
   /* keep each ✦ attached to the item after it so it wraps down with it on narrow screens */
   .hero-date .hero-date-item{ display:inline-flex; align-items:center; gap:18px; }
-  /* mobile: hide only the ✦ before the time; keep the ✦ between مساءً and منزل العروسة */
-  @media (max-width:640px){ .hero-date > span:nth-of-type(2) > span:first-child{ display:none; } }
+  /* time + venue stay together as one unit (desktop gaps unchanged) */
+  .hero-date .hero-date-line{ display:inline-flex; align-items:center; gap:18px; }
+  /* mobile: date on its own line, time ✦ venue on one line, hide only the ✦ before the time */
+  @media (max-width:640px){
+    .hero-date{ font-size:clamp(14px,4.4vw,17px); padding:10px 12px; }
+    .hero-date .hero-date-line{ gap:12px; white-space:nowrap; }
+    .hero-date .hero-date-line .hero-date-item{ gap:12px; }
+    .hero-date .hero-date-line > .hero-date-item:first-child > span:first-child{ display:none; }
+  }
   .scroll-hint{ margin-top:30px; color:#e9d9ae; font-size:13.5px; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .scroll-hint svg{ animation:bob 2.2s ease-in-out infinite; }
   @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
@@ -481,8 +488,7 @@
   <p class="hero-verse">﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾</p>
   <div class="hero-date">
     <span>الجمعة ٢٥ ديسمبر ٢٠٢٦</span>
-    <span class="hero-date-item"><span aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span></span>
-    <span class="hero-date-item"><span aria-hidden="true">✦</span><span>منزل العروسة</span></span>
+    <span class="hero-date-line"><span class="hero-date-item"><span aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span></span><span class="hero-date-item"><span aria-hidden="true">✦</span><span>منزل العروسة</span></span></span>
   </div>
   <div class="scroll-hint" aria-hidden="true">
     <span>مرّر للأسفل</span>
