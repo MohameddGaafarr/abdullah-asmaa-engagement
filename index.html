@@ -187,6 +187,11 @@
     box-shadow:inset 0 0 18px rgba(201,164,92,.12);
   }
   .gate-date .dot{ color:#c9a45c; }
+  /* keep the ✦ attached to the time so it wraps down with it on narrow screens */
+  .gate-date .date-time{ display:inline-flex; align-items:center; gap:14px; }
+  /* trailing ✦ after the time: mobile only, so the time line is framed on both sides */
+  .gate-date .m-only{ display:none; }
+  @media (max-width:640px){ .gate-date .m-only{ display:inline; } }
   .open-btn{
     position:relative; overflow:hidden;
     margin-top:30px;
@@ -280,6 +285,17 @@
     padding:10px 22px; font-weight:700; font-size:18px; color:#fdf3d8;
     background:rgba(20,12,4,.28); backdrop-filter:blur(3px);
   }
+  /* keep each ✦ attached to the item after it so it wraps down with it on narrow screens */
+  .hero-date .hero-date-item{ display:inline-flex; align-items:center; gap:18px; }
+  /* time + venue stay together as one unit (desktop gaps unchanged) */
+  .hero-date .hero-date-line{ display:inline-flex; align-items:center; gap:18px; }
+  /* mobile: date on its own line, time ✦ venue on one line, hide only the ✦ before the time */
+  @media (max-width:640px){
+    .hero-date{ font-size:clamp(14px,4.4vw,17px); padding:10px 12px; }
+    .hero-date .hero-date-line{ gap:12px; white-space:nowrap; }
+    .hero-date .hero-date-line .hero-date-item{ gap:12px; }
+    .hero-date .hero-date-line > .hero-date-item:first-child > span:first-child{ display:none; }
+  }
   .scroll-hint{ margin-top:30px; color:#e9d9ae; font-size:13.5px; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .scroll-hint svg{ animation:bob 2.2s ease-in-out infinite; }
   @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
@@ -296,6 +312,11 @@
     font-size:clamp(27px,6.5vw,34px); margin:0 0 8px; color:var(--brown-deep);
   }
   .sec-sub{ text-align:center; color:var(--ink-soft); margin:0 auto 30px; max-width:520px; font-weight:300; }
+  /* mobile-only line break inside a subtitle (desktop keeps one line) */
+  .sec-sub .m-br{ display:none; }
+  @media (max-width:640px){ .sec-sub .m-br{ display:inline; } }
+  /* mobile only: hide the dash in the location subtitle */
+  @media (max-width:640px){ .sec-sub .loc-dash{ display:none; } }
 
   .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s ease; }
   .reveal.in{ opacity:1; transform:none; }
@@ -325,6 +346,9 @@
   .d-card h3{ margin:0 0 4px; font-size:16px; color:var(--gold); font-weight:800; }
   .d-big{ font-family:"Amiri",serif; font-weight:700; font-size:21px; color:var(--brown-deep); line-height:1.6; }
   .d-small{ color:var(--ink-soft); font-size:15px; margin-top:2px; }
+  /* venue address: two lines on desktop, one dashed line on mobile */
+  .d-small .d-dash{ display:none; }
+  @media (max-width:640px){ .d-small .d-dash{ display:inline; } .d-small .d-br{ display:none; } }
 
   /* photo */
   .photo-frame{
@@ -350,6 +374,12 @@
   }
   .gold-flank{ flex:1 1 56px; max-width:96px; min-width:40px; display:flex; align-items:center; }
   .gold-flank svg{ display:block; width:100%; height:26px; filter:drop-shadow(0 0 5px rgba(201,164,92,.45)); }
+  /* mobile only: hide the side ornaments; the line becomes one distinctive gold line */
+  @media (max-width:640px){
+    .photo-highlight{ margin-left:-20px; margin-right:-20px; }
+    .photo-highlight .gold-flank{ display:none; }
+    .photo-line{ white-space:nowrap; font-size:clamp(15px,4.7vw,20px); color:var(--gold); }
+  }
   @media (max-width:480px){
     .photo-highlight{ gap:10px; }
     .gold-flank{ min-width:34px; }
@@ -363,6 +393,8 @@
   }
   .map-box iframe{ display:block; width:100%; height:320px; border:0; }
   .addr{ text-align:center; margin:20px 0 4px; font-size:18px; }
+  /* mobile only: hide the venue name and dash under the map */
+  @media (max-width:640px){ .addr .addr-venue{ display:none; } }
   .addr b{ color:var(--brown-deep); }
   .actions{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:22px; }
   a.btn{
@@ -383,6 +415,9 @@
     text-align:center; width:100%;
   }
   .closing p{ color:var(--ink-soft); max-width:500px; margin:0 auto; font-weight:300; }
+  /* mobile only: cut the closing line after بهجة */
+  .closing .m-dot{ display:none; }
+  @media (max-width:640px){ .closing .m-tail{ display:none; } .closing .m-dot{ display:inline; } }
   footer{
     margin-top:64px; border-top:1px solid var(--line);
     padding:26px 20px 90px; text-align:center; color:var(--ink-soft); font-size:14.5px;
@@ -439,7 +474,7 @@
       <div class="gate-stagger" style="animation-delay:.55s">
         <div class="gate-divider" aria-hidden="true"><i></i></div>
         <p class="gate-sub"><span class="gs-a">يسعدنا دعوتكم </span><span class="gs-b">لمشاركتنا فرحة خطوبتنا</span></p>
-        <p class="gate-date"><span>الجمعة ٢٥ ديسمبر ٢٠٢٦</span><span class="dot" aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span></p>
+        <p class="gate-date"><span>الجمعة ٢٥ ديسمبر ٢٠٢٦</span><span class="date-time"><span class="dot" aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span><span class="dot m-only" aria-hidden="true">✦</span></span></p>
       </div>
       <div class="gate-stagger" style="animation-delay:.75s">
         <button class="open-btn" id="openBtn" type="button">
@@ -468,10 +503,7 @@
   <p class="hero-verse">﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾</p>
   <div class="hero-date">
     <span>الجمعة ٢٥ ديسمبر ٢٠٢٦</span>
-    <span aria-hidden="true">✦</span>
-    <span>الساعة ٦ مساءً</span>
-    <span aria-hidden="true">✦</span>
-    <span>منزل العروسة</span>
+    <span class="hero-date-line"><span class="hero-date-item"><span aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span></span><span class="hero-date-item"><span aria-hidden="true">✦</span><span>منزل العروسة</span></span></span>
   </div>
   <div class="scroll-hint" aria-hidden="true">
     <span>مرّر للأسفل</span>
@@ -487,7 +519,7 @@
       <svg width="26" height="18" viewBox="0 0 26 18" fill="none"><circle cx="10" cy="10" r="6.5" stroke="#b08d4f" stroke-width="1.8"/><circle cx="17" cy="10" r="6.5" stroke="#c9a45c" stroke-width="1.8"/></svg>
     </div>
     <h2 class="sec-title" id="cd-title">العدّ التنازلي لليوم السعيد</h2>
-    <p class="sec-sub">أيام قليلة تفصلنا عن أجمل بداية… ونعدّها معكم لحظة بلحظة</p>
+    <p class="sec-sub">أيام قليلة تفصلنا عن أجمل بداية…<br class="m-br">ونعدّها معكم لحظة بلحظة</p>
     <div class="countdown reveal" id="countdown" role="timer" aria-label="العد التنازلي حتى يوم الخطوبة">
       <div class="cd-cell"><div class="cd-num" id="cd-d">—</div><div class="cd-lab">يوم</div></div>
       <div class="cd-cell"><div class="cd-num" id="cd-h">—</div><div class="cd-lab">ساعة</div></div>
@@ -503,7 +535,7 @@
       <svg width="26" height="18" viewBox="0 0 26 18" fill="none"><circle cx="10" cy="10" r="6.5" stroke="#b08d4f" stroke-width="1.8"/><circle cx="17" cy="10" r="6.5" stroke="#c9a45c" stroke-width="1.8"/></svg>
     </div>
     <h2 class="sec-title" id="det-title">تفاصيل الاحتفال</h2>
-    <p class="sec-sub">نتشرّف بحضوركم ومشاركتنا هذه المناسبة السعيدة</p>
+    <p class="sec-sub">نتشرّف بحضوركم<br class="m-br">ومشاركتنا هذه المناسبة السعيدة</p>
     <div class="details">
       <div class="d-card reveal">
         <div class="d-ic" aria-hidden="true">
@@ -525,7 +557,7 @@
         </div>
         <h3>المكان</h3>
         <div class="d-big">منزل العروسة</div>
-        <div class="d-small">دمياط الجديدة<br/>شارع الصحبجية</div>
+        <div class="d-small">دمياط الجديدة<span class="d-dash"> - </span><br class="d-br">شارع الصحبجية</div>
       </div>
     </div>
   </section>
@@ -558,11 +590,11 @@
       <svg width="26" height="18" viewBox="0 0 26 18" fill="none"><circle cx="10" cy="10" r="6.5" stroke="#b08d4f" stroke-width="1.8"/><circle cx="17" cy="10" r="6.5" stroke="#c9a45c" stroke-width="1.8"/></svg>
     </div>
     <h2 class="sec-title" id="loc-title">العنوان والموقع</h2>
-    <p class="sec-sub">الاحتفال في منزل العروسة — يسعدنا وصولكم بسلام</p>
+    <p class="sec-sub">الاحتفال في منزل العروسة<span class="loc-dash"> — </span><br class="m-br">يسعدنا وصولكم بسلام</p>
     <div class="map-box reveal">
       <iframe title="خريطة موقع الخطوبة في دمياط الجديدة" src="https://maps.google.com/maps?q=31.425640106201172,31.664621353149414&z=17&hl=ar&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     </div>
-    <p class="addr"><b>منزل العروسة</b> — شارع الصحبجية، دمياط الجديدة</p>
+    <p class="addr"><span class="addr-venue"><b>منزل العروسة</b> — </span>شارع الصحبجية، دمياط الجديدة</p>
     <div class="actions">
       <a class="btn btn-gold" href="https://www.google.com/maps?q=31.425640106201172,31.664621353149414&z=17&hl=ar" target="_blank" rel="noopener">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-6.5-5.4-6.5-10.3A6.5 6.5 0 0 1 12 4a6.5 6.5 0 0 1 6.5 6.7C18.5 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.6" r="2.4" stroke="currentColor" stroke-width="2"/></svg>
@@ -581,7 +613,7 @@
       <svg width="26" height="18" viewBox="0 0 26 18" fill="none"><circle cx="10" cy="10" r="6.5" stroke="#b08d4f" stroke-width="1.8"/><circle cx="17" cy="10" r="6.5" stroke="#c9a45c" stroke-width="1.8"/></svg>
     </div>
     <p class="big reveal">في انتظار تشريفكم</p>
-    <p class="reveal">حضوركم يُتمّ فرحتنا ويزيد ليلتنا بهجة… أهلًا بكم في بيت العروسة.</p>
+    <p class="reveal">حضوركم يُتمّ فرحتنا ويزيد ليلتنا بهجة<span class="m-dot">.</span><span class="m-tail">… أهلًا بكم في بيت العروسة.</span></p>
   </section>
 
 </main>
