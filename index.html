@@ -322,6 +322,9 @@
   .d-card h3{ margin:0 0 4px; font-size:16px; color:var(--gold); font-weight:800; }
   .d-big{ font-family:"Amiri",serif; font-weight:700; font-size:21px; color:var(--brown-deep); line-height:1.6; }
   .d-small{ color:var(--ink-soft); font-size:15px; margin-top:2px; }
+  /* venue address: two lines on desktop, one dashed line on mobile */
+  .d-small .d-dash{ display:none; }
+  @media (max-width:640px){ .d-small .d-dash{ display:inline; } .d-small .d-br{ display:none; } }
 
   /* photo */
   .photo-frame{
@@ -520,7 +523,7 @@
         </div>
         <h3>المكان</h3>
         <div class="d-big">منزل العروسة</div>
-        <div class="d-small">دمياط الجديدة<br/>شارع الصحبجية</div>
+        <div class="d-small">دمياط الجديدة<span class="d-dash"> - </span><br class="d-br">شارع الصحبجية</div>
       </div>
     </div>
   </section>
