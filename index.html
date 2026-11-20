@@ -267,6 +267,8 @@
     padding:10px 22px; font-weight:700; font-size:18px; color:#fdf3d8;
     background:rgba(20,12,4,.28); backdrop-filter:blur(3px);
   }
+  /* keep each ✦ attached to the item after it so it wraps down with it on narrow screens */
+  .hero-date .hero-date-item{ display:inline-flex; align-items:center; gap:18px; }
   .scroll-hint{ margin-top:30px; color:#e9d9ae; font-size:13.5px; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .scroll-hint svg{ animation:bob 2.2s ease-in-out infinite; }
   @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
@@ -455,10 +457,8 @@
   <p class="hero-verse">﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾</p>
   <div class="hero-date">
     <span>الجمعة ٢٥ ديسمبر ٢٠٢٦</span>
-    <span aria-hidden="true">✦</span>
-    <span>الساعة ٦ مساءً</span>
-    <span aria-hidden="true">✦</span>
-    <span>منزل العروسة</span>
+    <span class="hero-date-item"><span aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span></span>
+    <span class="hero-date-item"><span aria-hidden="true">✦</span><span>منزل العروسة</span></span>
   </div>
   <div class="scroll-hint" aria-hidden="true">
     <span>مرّر للأسفل</span>
