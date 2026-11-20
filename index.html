@@ -161,6 +161,9 @@
   .gate-divider::after{ background:linear-gradient(90deg,#c9a45c,transparent); }
   .gate-divider i{ width:8px; height:8px; background:#d9b264; transform:rotate(45deg); box-shadow:0 0 10px rgba(217,178,100,.8); }
   .gate-sub{ margin:8px 0 0; color:#efe3c6; font-size:17px; font-weight:300; text-shadow:0 1px 8px rgba(0,0,0,.5); }
+  /* mobile-only line break inside the gate subtitle (desktop keeps one line) */
+  .gate-sub .m-br{ display:none; }
+  @media (max-width:640px){ .gate-sub .m-br{ display:inline; } }
   .gate-date{
     margin:20px auto 0; display:inline-flex; flex-wrap:wrap; justify-content:center; gap:6px 14px;
     border:1px solid rgba(222,192,132,.5); border-radius:999px;
@@ -420,7 +423,7 @@
       <div class="gate-names gate-stagger" style="animation-delay:.35s">عبدالله <span class="amp">&amp;</span> أسماء</div>
       <div class="gate-stagger" style="animation-delay:.55s">
         <div class="gate-divider" aria-hidden="true"><i></i></div>
-        <p class="gate-sub">يسعدنا دعوتكم لمشاركتنا فرحة خطوبتنا</p>
+        <p class="gate-sub">يسعدنا دعوتكم<br class="m-br">لمشاركتنا فرحة خطوبتنا</p>
         <p class="gate-date"><span>الجمعة ٢٥ ديسمبر ٢٠٢٦</span><span class="dot" aria-hidden="true">✦</span><span>الساعة ٦ مساءً</span></p>
       </div>
       <div class="gate-stagger" style="animation-delay:.75s">
