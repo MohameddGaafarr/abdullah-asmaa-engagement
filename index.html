@@ -434,6 +434,9 @@
   </div>
 </div>
 
+<!-- ===== Background music: «فرحة» — محمود العسيلي ===== -->
+<audio id="bgMusic" src="farha.mp3" loop preload="auto"></audio>
+
 <!-- ===== Music toggle ===== -->
 <button id="musicBtn" type="button" aria-label="تشغيل أو إيقاف الموسيقى" title="الموسيقى">
   <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
@@ -648,101 +651,24 @@
     setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
   });
 
-  /* =====================================================
-     Background music — a soft romantic instrumental
-     generated live with Web Audio (gentle piano-like
-     arpeggios over warm pads, Pachelbel-style progression)
-     ===================================================== */
+  /* Background music — «فرحة» لمحمود العسيلي (first 35 seconds, loops; starts on «افتح الدعوة») */
   var Music = (function(){
-    var ctx = null, master = null, timer = null, playing = false, bar = 0;
-
-    // D major progression: D – A – Bm – F#m – G – D – G – A
-    var CHORDS = [
-      { bass: 146.83, notes: [293.66, 369.99, 440.00, 587.33] },  // D
-      { bass: 110.00, notes: [220.00, 277.18, 329.63, 440.00] },  // A
-      { bass: 123.47, notes: [246.94, 293.66, 369.99, 493.88] },  // Bm
-      { bass:  92.50, notes: [185.00, 220.00, 277.18, 369.99] },  // F#m
-      { bass:  98.00, notes: [196.00, 246.94, 293.66, 392.00] },  // G
-      { bass: 146.83, notes: [293.66, 369.99, 440.00, 587.33] },  // D
-      { bass:  98.00, notes: [196.00, 246.94, 293.66, 392.00] },  // G
-      { bass: 110.00, notes: [220.00, 277.18, 329.63, 440.00] }   // A
-    ];
-    var BAR = 3.6; // seconds per bar
-
-    function build(){
-      ctx = new (window.AudioContext || window.webkitAudioContext)();
-      master = ctx.createGain();
-      master.gain.value = 0.0;
-
-      // gentle feedback delay for ambience
-      var delay = ctx.createDelay(1.0); delay.delayTime.value = 0.34;
-      var fb = ctx.createGain(); fb.gain.value = 0.28;
-      var wet = ctx.createGain(); wet.gain.value = 0.35;
-      var filter = ctx.createBiquadFilter();
-      filter.type = "lowpass"; filter.frequency.value = 2600;
-
-      master.connect(filter); filter.connect(ctx.destination);
-      filter.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(ctx.destination);
-    }
-
-    function tone(freq, start, dur, vol, type){
-      var o = ctx.createOscillator(), g = ctx.createGain();
-      o.type = type || "sine";
-      o.frequency.value = freq;
-      g.gain.setValueAtTime(0.0001, start);
-      g.gain.exponentialRampToValueAtTime(vol, start + 0.04);
-      g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
-      o.connect(g); g.connect(master);
-      o.start(start); o.stop(start + dur + 0.1);
-    }
-
-    function playBar(){
-      var chord = CHORDS[bar % CHORDS.length];
-      var t = ctx.currentTime + 0.06;
-      // warm pad: whole chord, very soft triangles
-      chord.notes.forEach(function(f){
-        tone(f, t, BAR + 0.4, 0.028, "triangle");
-        tone(f * 2, t, BAR + 0.4, 0.008, "sine");
-      });
-      // deep soft bass
-      tone(chord.bass, t, BAR, 0.05, "sine");
-      tone(chord.bass * 2, t, BAR * 0.9, 0.015, "triangle");
-      // piano-like arpeggio: up then a gentle turn
-      var pattern = [0, 1, 2, 3, 2, 1, 2, 3];
-      var step = BAR / pattern.length;
-      pattern.forEach(function(idx, i){
-        tone(chord.notes[idx] * 2, t + i * step, step * 2.4, 0.045, "sine");
-        tone(chord.notes[idx] * 2, t + i * step, step * 1.4, 0.02, "triangle");
-      });
-      bar++;
-    }
+    var audio = document.getElementById("bgMusic");
+    audio.loop = true;
 
     function start(){
-      if(!ctx) build();
-      if(ctx.state === "suspended") ctx.resume();
-      if(playing) return;
-      playing = true; bar = 0;
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-      master.gain.linearRampToValueAtTime(0.9, ctx.currentTime + 1.6);
-      playBar();
-      timer = setInterval(playBar, BAR * 1000);
+      var p = audio.play();
+      if(p && p.catch) p.catch(function(){});
     }
-
-    function stop(){
-      if(!ctx || !playing) return;
-      playing = false;
-      clearInterval(timer);
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-      master.gain.linearRampToValueAtTime(0.0, ctx.currentTime + 0.5);
-      setTimeout(function(){ if(!playing && ctx) ctx.suspend(); }, 600);
-    }
+    function stop(){ audio.pause(); }
 
     return {
       start: start, stop: stop,
-      toggle: function(){ playing ? stop() : start(); return playing; },
-      isPlaying: function(){ return playing; }
+      toggle: function(){
+        if(audio.paused){ start(); return true; }
+        stop(); return false;
+      },
+      isPlaying: function(){ return !audio.paused; }
     };
   })();
 
